@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 transformers = "*"
 torch = "*"
+keras = "*"
 
 [dev-packages]
 

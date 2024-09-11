@@ -1,0 +1,7 @@
+{
+    "tacan_set": 0,
+    "canopy_open": 1,
+    "view_external": 2,
+    "engine_on": 3,
+    "engine_off": 4
+}
