@@ -1,4 +1,83 @@
 ---
+- intent: altimeter_barometric_off
+  examples:
+    - barometric altimeter off
+    - barometric altitude off
+    - disable barometric altimeter
+    - turn barometric altimeter off
+    - turn off barometric altimeter
+    - turn off the barometric altimeter
+
+- intent: altimeter_barometric_on
+  examples:
+    - altimeter baro
+    - altimeter barometric
+    - altimeter barometric mode
+    - baro altimeter
+    - baro altimeter on
+    - set altimeter to barometric
+    - set altimeter to barometric mode
+    - set altitude barometer
+    - set altitude barometric
+    - turn on barometric altimeter
+
+- intent: altimeter_radar_off
+  examples:
+    - disable radar altimeter
+    - radar altimeter off
+    - set radar altimeter off
+    - switch off the radar altimeter
+    - switch the radar altimeter off
+    - turn off the radar altimeter
+    - turn radar altimeter off
+    - turn the radar altimeter off
+
+- intent: altimeter_radar_on
+  examples:
+    - activate radar altimeter
+    - altimeter radar
+    - altimeter radar mode
+    - enable radar altimeter
+    - set altimeter radar
+    - set altimeter to radar mode
+    - set the altimeter to radar mode
+    - turn radar altimeter on
+
+- intent: anti_skid_off
+  examples:
+    - anti-skid off
+    - deactivate anti-skid
+    - disable anti-skid
+    - disable anti skid switch
+    - turn anti-skid off
+    - turn off anti skid
+
+- intent: anti_skid_on
+  examples:
+    - activate anti-skid
+    - anti-skid on
+    - enable anti-skid
+    - enable anti skid switch
+    - turn anti-skid on
+    - turn on anti skid
+
+- intent: arresting_hook_down
+  examples:
+    - arresting hook down
+    - hook down
+    - engage hook
+    - lower hook
+    - extend hook
+    - enable arresting hook
+
+- intent: arresting_hook_up
+  examples:
+    - arresting hook up
+    - hook up
+    - disengage hook
+    - raise hook
+    - retract hook
+    - disable arresting hook
 
 - intent: canopy_close
   examples:

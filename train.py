@@ -98,6 +98,12 @@ model.to(device)
 optimizer = AdamW(model.parameters(), lr=2e-5)
 criterion = nn.CrossEntropyLoss()
 
+# Early stopping parameters
+patience = 20
+best_val_loss = float('inf')
+counter = 0
+best_model = None
+
 # Training loop
 num_epochs = 100
 for epoch in range(num_epochs):
@@ -135,15 +141,33 @@ for epoch in range(num_epochs):
             total += intent.size(0)
             correct += (predicted == intent).sum().item()
 
+    avg_train_loss = train_loss / len(train_loader)
+    avg_val_loss = val_loss / len(val_loader)
+    accuracy = 100 * correct / total
+
     print(f"Epoch {epoch+1}/{num_epochs}")
-    print(f"Train Loss: {train_loss/len(train_loader):.4f}")
-    print(f"Validation Loss: {val_loss/len(val_loader):.4f}")
-    print(f"Validation Accuracy: {100 * correct / total:.2f}%")
+    print(f"Train Loss: {avg_train_loss:.4f}")
+    print(f"Validation Loss: {avg_val_loss:.4f}")
+    print(f"Validation Accuracy: {accuracy:.2f}%")
     print()
 
-# Save the model
-torch.save(model.state_dict(), "intent_classification_model.pth")
-print("Model saved successfully.")
+    # Early stopping
+    if avg_val_loss < best_val_loss:
+        best_val_loss = avg_val_loss
+        counter = 0
+        best_model = model.state_dict()
+    else:
+        counter += 1
+        if counter >= patience:
+            print(f"Early stopping triggered after {epoch+1} epochs")
+            break
+
+# Load the best model
+model.load_state_dict(best_model)
+
+# Save the best model
+torch.save(best_model, "intent_classification_model.pth")
+print("Best model saved successfully.")
 
 # Test inferences with confidence threshold
 def predict_intent(model, tokenizer, text, confidence_threshold=0.7):
@@ -183,6 +207,11 @@ test_sentences = [
     "canopy close",
     "external view",
     "put the canopy down",
+    "baro altimeter on",
+    "radar altimter off",
+    "turn on barometric altimeter",
+    "enable arresting hook",
+    "enable anti skid",
     "The quick brown fox jumps over the lazy dog",
 ]
 
