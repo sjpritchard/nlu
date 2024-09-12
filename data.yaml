@@ -1,19 +1,37 @@
 ---
 
-- intent: greet
+- intent: canopy_close
   examples:
-    - Hi
-    - Hello
-    - Hey
-    - Hi bot
-    - Hello bot
-    - Hey bot
+    - close the canopy
+    - lower the canopy
+    - close canopy
+    - canopy close
+    - close the canopy please
+    - retract the canopy
+    - lower the canopy
+    - canopy down
+    - put the canopy down
 
-- intent: goodbye
+- intent: canopy_open
   examples:
-    - Bye
-    - Goodbye
-    - See you later
-    - Bye bot
-    - Goodbye bot
-    - See you later bot
+    - open the canopy
+    - open canopy
+    - raise canopy
+    - lift canopy
+    - canopy open
+    - canopy open please
+    - canopy down
+    - open the canopy please
+    - canopy up
+    - canopy up now
+
+- intent: switch_view
+  examples:
+    - switch view
+    - change view
+    - change the view
+    - switch the view
+    - change the camera view
+    - switch the camera view
+    - external view
+    - airport view

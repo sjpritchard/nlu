@@ -7,6 +7,7 @@ name = "pypi"
 transformers = "*"
 torch = "*"
 keras = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
