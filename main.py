@@ -62,3 +62,6 @@ print(outputs[0].shape) # batch size, sequence length, output size
 # representation for classification tasks. This will be used as the features
 # for the intent classifier
 print(outputs[1].shape) # batch size, output size
+
+print(outputs[0])
+print(outputs[1])
