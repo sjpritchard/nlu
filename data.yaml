@@ -1,0 +1,19 @@
+---
+
+- intent: greet
+  examples:
+    - Hi
+    - Hello
+    - Hey
+    - Hi bot
+    - Hello bot
+    - Hey bot
+
+- intent: goodbye
+  examples:
+    - Bye
+    - Goodbye
+    - See you later
+    - Bye bot
+    - Goodbye bot
+    - See you later bot

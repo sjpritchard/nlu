@@ -1,13 +1,58 @@
 import torch
 from torch import nn
-from transformers import AutoModel
+from transformers import AutoModel, BertModel, BertTokenizer
+import json
+import yaml
+
+model_name = "bert-base-cased"
+with open("data.yaml", "r") as f:
+    data = yaml.safe_load(f)
+
+
+class IntentClassificationDataset(torch.utils.data.Dataset):
+    def __init__(self):
+        self.tokenizer: BertTokenizer = BertTokenizer.from_pretrained(model_name)
+        self.max_length = 25
+        self.data = []
+        self.intents = []
+        self.intent_index = []
+        for item in data:
+            for example in item["examples"]:
+                if item["intent"] not in self.intent_index:
+                    self.intent_index.append(item["intent"])
+                self.data.append(example)
+                self.intents.append(self.intent_index.index(item["intent"]))
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        sentence = self.data[idx]
+        intent = self.intents[idx]
+        encoded = self.tokenizer.encode_plus(
+            sentence,
+            max_length=self.max_length,
+            padding="max_length",
+            truncation=True,
+            return_tensors="pt"
+        )
+        return {
+            "input_ids": encoded["input_ids"].squeeze(0),
+            "attention_mask": encoded["attention_mask"].squeeze(0),
+            "intent": torch.tensor(intent, dtype=torch.long),
+        }
+
 
 class IntentClassificationModel(nn.Module):
-    def __init__(self, intent_num_labels=None, model_name="bert-base-cased", dropout_prob=0.1):
+    def __init__(
+        self, intent_num_labels=None, model_name="bert-base-cased", dropout_prob=0.1
+    ):
         super().__init__()
-        self.bert = AutoModel.from_pretrained(model_name)
+        self.bert: BertModel = AutoModel.from_pretrained(model_name)
         self.dropout = nn.Dropout(dropout_prob)
-        self.intent_classifier = nn.Linear(self.bert.config.hidden_size, intent_num_labels)
+        self.intent_classifier = nn.Linear(
+            self.bert.config.hidden_size, intent_num_labels
+        )
 
     def forward(self, inputs):
         outputs = self.bert(**inputs)
@@ -16,14 +61,7 @@ class IntentClassificationModel(nn.Module):
         intent_logits = self.intent_classifier(pooled_output)
         return intent_logits
 
-# Assuming intent_map is defined
-intent_model = IntentClassificationModel(intent_num_labels=len(intent_map))
 
-# Example of how to set up optimizer and loss function
-optimizer = torch.optim.Adam(intent_model.parameters())
-loss_fn = nn.CrossEntropyLoss()
-
-# Example of how to compute accuracy
-def compute_accuracy(logits, labels):
-    predictions = torch.argmax(logits, dim=-1)
-    return (predictions == labels).float().mean()
+dataset = IntentClassificationDataset()
+for item in dataset:
+    print(item)
