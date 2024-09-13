@@ -1,0 +1,12 @@
+- entity: view
+  values:
+    - ref: internal
+      synonyms:
+        - cockpit
+        - inside
+        - internal
+    - ref: external
+      synonyms:
+        - external
+        - outside
+        - out

@@ -106,11 +106,7 @@
 
 - intent: switch_view
   examples:
-    - switch view
-    - change view
-    - change the view
-    - switch the view
-    - change the camera view
-    - switch the camera view
-    - external view
-    - airport view
+    - "switch to [view] view"
+    - "go to [view] view"
+    - "[view] view"
+    - "change to [view] view"
